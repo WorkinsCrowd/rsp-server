@@ -1,5 +1,6 @@
 'use strict'
 const micro = require('micro')
+const {send} = require('micro')
 
 class ApiController {
   constructor (config, dbHelper) {
@@ -9,14 +10,20 @@ class ApiController {
     this.db = dbHelper
   }
 
-  async requestHandler (req) {
+  async requestHandler (req, res) {
+    res.setHeader(
+      'Access-Control-Allow-Origin', '*'
+    )
+
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
+
     try {
       const data = await micro.json(req)
 
-      return await this.queryHandler(data)
+      send(res, 200, await this.queryHandler(data))
     } catch (e) {
       console.error('Can\'t handle request.', e.message)
-      return ApiController.apiError()
+      send(res, 200, ApiController.apiError())
     }
   }
 
