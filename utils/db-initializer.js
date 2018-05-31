@@ -12,6 +12,10 @@ MongoClient.connect(config.database.url).then(async (client) => {
         address: 1
       },
       unique: true
+    }, {
+      key: {
+        timestamp: 1
+      }
     }])
   } catch (e) {
     console.error(e.message)

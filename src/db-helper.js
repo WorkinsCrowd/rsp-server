@@ -57,7 +57,7 @@ class DbHelper {
   }
 
   async deleteConnection (address) {
-    return this.connections.removeOne({ address })
+    return (await this.connections.removeOne({ address }) && true) || false
   }
 
   close () {

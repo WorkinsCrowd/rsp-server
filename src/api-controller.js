@@ -43,13 +43,13 @@ class ApiController {
 
     switch (command) {
       case 'ping':
-        response.message = this.db.ping(message.data.address)
+        response.message = await this.db.ping(message.data.address)
         break
       case 'disconnect':
-        response.message = this.db.deleteConnection(message.data.address)
+        response.message = await this.db.deleteConnection(message.data.address)
         break
       case 'checkAddress':
-        response.message = this.db.addressConnected(message.data.address)
+        response.message = await this.db.addressConnected(message.data.address)
         break
       default:
         response = ApiController.apiError(`Unknown command: ${command}`)
