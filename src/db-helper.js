@@ -21,6 +21,11 @@ class DbHelper {
 
     return status
   }
+  async addressConnected (address) {
+    return (await this.connections.findOne({
+      address
+    })) !== null
+  }
 
   async ping (address) {
     try {

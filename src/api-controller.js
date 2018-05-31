@@ -48,6 +48,9 @@ class ApiController {
       case 'disconnect':
         response.message = this.db.deleteConnection(message.data.address)
         break
+      case 'checkAddress':
+        response.message = this.db.addressConnected(message.data.address)
+        break
       default:
         response = ApiController.apiError(`Unknown command: ${command}`)
     }
