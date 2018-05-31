@@ -10,9 +10,12 @@ MongoClient.connect(config.database.url).then(async (client) => {
     await connections.createIndexes([{
       key: {
         address: 1
-      }
+      },
+      unique: true
     }])
   } catch (e) {
     console.error(e.message)
   }
+
+  process.exit()
 })

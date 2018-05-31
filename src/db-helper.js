@@ -22,6 +22,39 @@ class DbHelper {
     return status
   }
 
+  async ping (address) {
+    try {
+      const currentEntry = await this.connections.findOne({
+        address
+      })
+
+      if (currentEntry !== null) {
+        await this.connections.updateOne({
+          address
+        }, {
+          $set: {
+            address,
+            timestamp: Date.now()
+          }
+        })
+      } else {
+        await this.connections.insertOne({
+          address,
+          timestamp: Date.now()
+        })
+      }
+    } catch (e) {
+      console.error(e.message)
+      return false
+    }
+
+    return true
+  }
+
+  async deleteConnection (address) {
+    return this.connections.removeOne({ address })
+  }
+
   close () {
     return this.client.close()
   }

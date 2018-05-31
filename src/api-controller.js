@@ -29,17 +29,34 @@ class ApiController {
 
   async queryHandler (message) {
     const command = message.command
-    let response = {}
+    let response = {
+      status: 0
+    }
+
+    if (void 0 === message.data) {
+      return ApiController.apiError(`undefined request data`)
+    }
+
+    if (!ApiController.validAddress(message.data)) {
+      return ApiController.apiError(`wrong address`)
+    }
 
     switch (command) {
-      case '1':
-        return 1
-
+      case 'ping':
+        response.message = this.db.ping(message.data.address)
+        break
+      case 'disconnect':
+        response.message = this.db.deleteConnection(message.data.address)
+        break
       default:
         response = ApiController.apiError(`Unknown command: ${command}`)
     }
 
     return response
+  }
+
+  static validAddress (data) {
+    return typeof data.address === 'string' && data.address.length === 34
   }
 }
 
