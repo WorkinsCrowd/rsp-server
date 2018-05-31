@@ -60,6 +60,14 @@ class DbHelper {
     return (await this.connections.removeOne({ address }) && true) || false
   }
 
+  clearOld () {
+    return this.connections.removeMany({
+      timestamp: {
+        $lte: (Date.now() - 10 * 60 * 1000)
+      }
+    })
+  }
+
   close () {
     return this.client.close()
   }

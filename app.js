@@ -8,6 +8,9 @@ const main = async () => {
   await dbHelper.initialize()
 
   const api = new ApiController(config.server, dbHelper)
+  const interval = setInterval(() => {
+    dbHelper.clearOld()
+  }, 10 * 1000)
 }
 
 main()
