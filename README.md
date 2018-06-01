@@ -1,3 +1,8 @@
 Rock-Scissors-Paper (http://rsp.fun/)
+Server part
 
-You can open it in nos-client and play the game on testnet or, if you want on your privnet.
+Installation
+
+1. install mongodb.org
+2. npm install
+3. node app.js
